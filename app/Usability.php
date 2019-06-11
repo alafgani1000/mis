@@ -4,10 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Usability extends Model
 {
-    protected $fillable = ['name'];
-
     public function requests()
     {
         return $this->hasMany('App\Request');

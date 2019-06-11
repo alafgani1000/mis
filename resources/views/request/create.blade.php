@@ -4,8 +4,7 @@
 <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Dashboard
-      <small>Control panel</small>
+      Form Permintaan
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -24,56 +23,38 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form role="form">
+        <form role="form" method="POST" action="{{ route('request.store') }}" enctype="multipart/form-data">
+          {{ csrf_field() }}
             <div class="box-body">
               <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
                         <label>Jenis Data Permintaan</label>
-                        <select class="form-control" name="category">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
+                        <select class="form-control" name="category" id="category">
+                           @foreach ($categories as $category)
+                            <option id="{{ $category->id}}" data-text="{{ $category->text }}" value="{{ $category->id}}">{{ $category->name }}</option>
+                           @endforeach
                         </select>
                     </div>
                     <div class="col-md-8">
-                        <label for="exampleInputEmail1">&nbsp;</label>
-                        <input type="text" class="form-control" id="idtext">
+                      <label for="exampleInputEmail1">&nbsp;</label>
+                      <input value="" type="text" class="form-control" id="idtext">
                     </div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="title">Judul Permintaan</label>
-                <input type="title" class="form-control" id="idtitle" placeholder="Judul">
+                <input name="title" type="title" class="form-control" id="idtitle" placeholder="Judul">
               </div>
               <div class="form-group">
                 <label>Produk</label>
                 <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                  &nbsp;
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                  &nbsp;
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                  &nbsp;
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                  &nbsp;
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                  &nbsp;
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
+                  @foreach ($products as $product)
+                    <label>
+                    <input name="products[]" value="{{ $product->id }}" type="checkbox"> {{ $product->name }}
+                    </label>
+                    &nbsp;
+                  @endforeach
                 </div>
               </div>
               <div class="form-group">
@@ -84,7 +65,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control pull-right" id="datepicker">
+                        <input name="start_date" type="text" class="form-control pull-right datepicker" id="">
                       </div>
                     </div>
                     <div class="col-md-1">
@@ -95,7 +76,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control pull-right" id="datepicker">
+                        <input name="end_date" type="text" class="form-control pull-right datepicker" id="">
                       </div>
                     </div>
                 <!-- /.input group -->
@@ -103,36 +84,30 @@
             </div>
             <div class="form-group">
               <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-12">
                       <label>Digunakan Untuk</label>
-                      <select class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
+                      <select class="form-control" name="usability">
+                          @foreach ($usabilities as $usability)
+                            <option value="{{ $usability->id }}">{{ $usability->name }}</option>
+                          @endforeach
                       </select>
-                  </div>
-                  <div class="col-md-8">
-                      <label for="exampleInputEmail1">&nbsp;</label>
-                      <input type="text" class="form-control" id="idtext">
                   </div>
               </div>
             </div>
             <div class="form-group">
               <label>Format Laporan</label>
-              <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+              <textarea name="format" class="form-control" rows="4" placeholder=""></textarea>
             </div>
             <div class="form-group">
               <label for="exampleInputFile">Attachment</label>
-              <input type="file" id="exampleInputFile">
-
+              <input name="attachment[]" type="file" id="exampleInputFile">
               <p class="help-block">Example block-level help text here.</p>
             </div>
+{{--             
             <div class="form-group">
               <div class="row">
-                  <div class="col-md-4">
-                      <label>Digunakan Untuk</label>
+                  <div class="col-md-12">
+                      <label>Aprroval Atasan</label>
                       <select class="form-control">
                           <option>option 1</option>
                           <option>option 2</option>
@@ -141,12 +116,9 @@
                           <option>option 5</option>
                       </select>
                   </div>
-                  <div class="col-md-8">
-                      <label for="exampleInputEmail1">&nbsp;</label>
-                      <input type="text" class="form-control" id="idtext">
-                  </div>
               </div>
-            </div>
+            </div> --}}
+
             <!-- /.box-body -->
             <div class="form-group">
               <div class="row">
@@ -167,4 +139,15 @@
         </div>
       </div>
     </section>
+    <script>
+      $(document).ready(function(){
+        $("#category").on('click',function(e){
+          var id = $("#category").val();
+          var idtest = "#"+id;
+          var speed = $(idtest).attr("data-text");
+          $("#idtext").val(speed);
+        });
+      });
+    </script>
 @endsection  
+  

@@ -41,12 +41,11 @@ class CreteMisTable extends Migration
 
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('categori_id');
-            $table->unsignedInteger('product_id');
-            $table->unsignedInteger('usabiliti_id');
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('usability_id');
+            $table->unsignedInteger('user_id');
             $table->string('title');
             $table->string('format');
-            $table->string('attachments');
             $table->date('start_date');
             $table->date('end_date');
             $table->unsignedInteger('status_id');

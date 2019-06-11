@@ -10,13 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::resource('request', 'RequestController');
-
-
 Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('request', 'RequestController');
+    Route::get('reqquest/{request}/boss/approval','RequestController@bossview')->name('boss.view');
+
+    Route::get('', 'RequestController@index')->name('home');
+
+});
+

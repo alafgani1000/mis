@@ -4,8 +4,8 @@
 <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Dashboard
-      <small>Control panel</small>
+      Data Permintaan
+      <small></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -15,58 +15,100 @@
 
   <section class="content">
     <div class="row">
-      <!-- left column -->
-      <div class="col-md-8">
-        <!-- general form elements -->
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Quick Example</h3>
-          </div>
-          <!-- /.box-header -->
-          <!-- form start -->
-          <form role="form">
-            <div class="box-body">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-4">
-                    <label for="exampleInputEmail1">Jenis Data Permintaan</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <div class="col-md-8">
-                    <label>Select</label>
-                    <select class="form-control">
-                      <option>option 1</option>
-                      <option>option 2</option>
-                      <option>option 3</option>
-                      <option>option 4</option>
-                      <option>option 5</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
-
-                <p class="help-block">Example block-level help text here.</p>
-              </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Check me out
-                </label>
-              </div>
+      <div class="col-xs-12">
+          @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
             </div>
-            <!-- /.box-body -->
+          @endif
+          <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Data Table With Full Features</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Judul Permintaan</th>
+                    <th>Jenis Data</th>
+                    <th>Produk</th>
+                    <th>Cut Off Date</th>
+                    <th>Format Laporan</th>
+                    <th>Tanggal Permintaan</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($requests as $request)
+                      <tr>
+                          <td>{{ $request->id }}</td>
+                          <td>{{ $request->title }}</td>
+                          <td>{{ $request->category->name }}</td>
+                          <td>
+                            @foreach ($request->requestProducts as $item)
+                              {{ $item->product->name }}
+                              @if (!$loop->last)
+                                  ,
+                              @endif
+                            @endforeach
+                          </td>
+                          <td>{{ $request->start_date}} s/d {{ $request->end_date }}</td>
+                          <td>{{ $request->format }}</td>
+                          <td>{{ $request->created_at }}</td>
+                          <td>{{ $request->status->name }}</td>
+                          <td>
+                              <div class="btn-group">
+                                <a data-url="{{ route('request.show',  $request->id) }}" type="button" class="btn btn-info btn-sm id-modal"><i data-url="{{ route('request.show',  $request->id) }}" class="fa fa-eye id-modal1"></i></a>
 
-            <div class="box-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{{ route('boss.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                              </div>
+                          </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>No</th>
+                    <th>Judul Permintaan</th>
+                    <th>Jenis Data</th>
+                    <th>Produk</th>
+                    <th>Cut Off Date</th>
+                    <th>Format Laporan</th>
+                    <th>Tanggal Permintaan</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.box-body -->
             </div>
-          </form>
-        </div>
       </div>
-    </section>
+    </div>
+    <div id="modalresponse" style="margin-top:2rem">
+    </div>
+    <script>
+        $(".id-modal").on("click",function(e){
+            var token = $("meta[name='csrf-token']").attr("content");
+            var url = $(event.target).data('url');
+            $.ajax({ 
+                url: url,
+                type: "GET",
+                data: {"_token": token, },
+
+                success: function (data, textStatus, jqXHR) {
+                    $("#modalresponse").html(data.html);
+                    $("#myModal").modal("show");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX error: " + textStatus + ' : ' + errorThrown);
+                },
+            });
+        });
+        
+    </script>
+  </section>
 @endsection  
