@@ -20,5 +20,29 @@ class Status extends Model
     {
         return $query->where('id',2);
     }
-    
+
+    public function scopeSptMisApproved($query)
+    {
+        return $query->where('id',3);
+    }
+
+    public function scopeMgrMisApproved($query)
+    {
+        return $query->where('id',4);
+    }
+
+    public function scopeBossRejected($query)
+    {
+        return $query->where('id',5);
+    }
+
+    public function scopeSptMisRejected($query)
+    {
+        return $query->where('id',6);
+    }
+
+    public function scopeMgrMisRejected($query)
+    {
+        return $query->where('id',7);
+    }
 }

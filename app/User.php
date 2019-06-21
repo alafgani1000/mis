@@ -33,4 +33,24 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Request');
     }
+
+    public function requestsApprovals()
+    {
+        return $this->hasMany('App\RequestApproval');
+    }
+
+    /**
+     * get boss from eos api
+     */
+    public function boss()
+    {
+        $json = file_get_contents(
+            "http://eos.krakatausteel.com/api/structdisp/"
+            . $this->id 
+            . "/minManagerBoss"
+        );
+        $data = json_decode($json,true);
+        return User::find($data['personnel_no']);
+    }
+
 }

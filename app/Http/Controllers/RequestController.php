@@ -105,7 +105,7 @@ class RequestController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -114,12 +114,114 @@ class RequestController extends Controller
         
     }
 
+    /**
+     * menampilkan form approve atasan
+     */
     public function bossview($id)
     {
         $request = R::find($id);
         return view('request.boss-approval', compact('request'));
     }
 
+    /**
+     * action atasan approved or rejected
+     */
+    public function bossapprove(Request $request, $id)
+    {
+        if($request->input('aksi') == 1)
+        {
+            $r = R::find($id);
+            $r->status_id = Status::bossApproved()->first()->id;
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil di Setujui.');
+        }
+        elseif($request->input('aksi') == 2)
+        {
+            $r = R::find($id);
+            $r->status_id = Status::bossRejected()->first()->id;
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil di Tolak.');
+        }
+        
+    }
+
+    /**
+     * menampilkan form approve super itendent MIS
+     */
+    public function sptview($id)
+    {
+        $request = R::find($id);
+        $requestApproval = $request->requestApprovals->where('status_id', 2)->first();
+        return view('request.spt-approval', compact('request', 'requestApproval'));
+    }
+
+     /**
+     * action supert itendent MIS approved or rejected
+     */
+    public function sptapprove(Request $request, $id)
+    {
+        if($request->input('aksi') == 1)
+        {
+            $r = R::find($id);
+            $r->status_id = Status::sptMisApproved()->first()->id;
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil di Setujui.');
+        }
+        elseif($request->input('aksi') == 2)
+        {
+            $r = R::find($id);
+            $r->status_id = Status::sptMisRejected()->first()->id;
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil di Tolak.');
+        }
+        
+    }
+
+     /**
+     * menampilkan form approve super itendent MIS
+     */
+    public function mgrview($id)
+    {
+        $request = R::find($id);
+        $requestApproval = $request->requestApprovals->where('status_id', 2)->first();
+        return view('request.mgr-approval', compact('request', 'requestApproval'));
+    }
+
+    
+     /**
+     * action supert itendent MIS approved or rejected
+     */
+    public function mgrapprove(Request $request, $id)
+    {
+        if($request->input('aksi') == 1)
+        {
+            $r = R::find($id);
+            $r->status_id = Status::mgrMisApproved()->first()->id;
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil di Setujui.');
+        }
+        elseif($request->input('aksi') == 2)
+        {
+            $r = R::find($id);
+            $r->status_id = Status::mgrMisRejected()->first()->id;
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil di Tolak.');
+        }
+        
+    }
+    
     /**
      * Update the specified resource in storage.
      *

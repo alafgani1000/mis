@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\support\Facades\Schema;
+use App\Request;
+use App\RequestApproval;
+use App\Observers\RequestObserver;
+use App\Observers\RequestApprovalObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Request::observe(RequestObserver::class);
+        RequestApproval::observe(RequestApprovalObserver::class);
     }
 
     /**

@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      FORM PERSETUJUAN ATASAN
+      FORM PERSETUJUAN MANAGER MIS
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -23,7 +23,7 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-        <form role="form" method="POST" action="{{ route('boss.approve', $request->id) }}" enctype="multipart/form-data">
+        <form role="form" method="POST" action="{{ route('mgr.approve', $request->id) }}" enctype="multipart/form-data">
           {{ csrf_field() }}
           {{ method_field('PUT') }}
             <div class="box-body">
