@@ -26,6 +26,11 @@ class Request extends Model
         return $this->hasMany('App\RequestAttachment');
     }
 
+    public function requestApprovals()
+    {
+        return $this->hasMany('App\RequestApproval');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');
