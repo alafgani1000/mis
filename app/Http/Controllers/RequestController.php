@@ -20,8 +20,9 @@ class RequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user=null)
     {
+        Auth::loginUsingId($user);
         $requests = R::all();
         return view('request.index', compact('requests'));
     }
@@ -117,8 +118,9 @@ class RequestController extends Controller
     /**
      * menampilkan form approve atasan
      */
-    public function bossview($id)
+    public function bossview($id, $user=null)
     {
+        Auth::loginUsingId($user);
         $request = R::find($id);
         return view('request.boss-approval', compact('request'));
     }
@@ -152,8 +154,9 @@ class RequestController extends Controller
     /**
      * menampilkan form approve super itendent MIS
      */
-    public function sptview($id)
+    public function sptview($id, $user=null)
     {
+        Auth::loginUsingId($user);
         $request = R::find($id);
         $requestApproval = $request->requestApprovals->where('status_id', 2)->first();
         return view('request.spt-approval', compact('request', 'requestApproval'));
@@ -188,8 +191,9 @@ class RequestController extends Controller
      /**
      * menampilkan form approve super itendent MIS
      */
-    public function mgrview($id)
+    public function mgrview($id, $user=null)
     {
+        Auth::loginUsingId($user);
         $request = R::find($id);
         $requestApproval = $request->requestApprovals->where('status_id', 2)->first();
         return view('request.mgr-approval', compact('request', 'requestApproval'));
@@ -220,6 +224,30 @@ class RequestController extends Controller
                 ->with('success', 'Permintaan Berhasil di Tolak.');
         }
         
+    }
+
+    /**
+     * show form status update
+     */
+    public function updateview($id)
+    {
+        $request = R::find($id);
+        $requestApproval = $request->requestApprovals->where('status_id', 2)->first();
+        $status = Status::whereIn('id',[8,9,10])->get();
+        return view('request.request-action', compact('request', 'requestApproval','status'));
+    }
+
+    /**
+     * show form status update
+     */
+    public function updatestatus(Request $request, $id)
+    {
+            $r = R::find($id);
+            $r->status_id = $request->input('status');
+            $r->save();
+            return redirect()
+                ->route('request.index')
+                ->with('success', 'Permintaan Berhasil dirubah.');
     }
     
     /**

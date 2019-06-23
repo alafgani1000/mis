@@ -84,7 +84,7 @@
                     </div>
                 </div>
                  <!-- row 3 -->
-                 <div class="row">
+                <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="service_id">Attachment:</label>
@@ -94,6 +94,32 @@
                                 <a href="{{ url($item->attachment)}}" target="_blank"><label>{{ $item->alias }}</label></a>
                             @endforeach
                         </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">History</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>User</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($request->requestApprovals as $item)
+                            <tr>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ title_case($item->user->name) }} ({{ $item->user->id }})</td>
+                                <td>{{ $item->status->name }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

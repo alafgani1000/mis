@@ -52,7 +52,7 @@ class RequestAction extends Notification
                     ->line($this->request->user->name . "(". $this->request->user->id .")")
                     ->line($this->request->title)
                     ->line($this->request->status->name)
-                    ->action('Notification Action', url('/'))
+                    ->action('Notification Action', $this->url)
                     ->line('Thank you for using our application!');
     }
 

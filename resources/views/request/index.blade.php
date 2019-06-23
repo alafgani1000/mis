@@ -62,9 +62,26 @@
                           <td>
                               <div class="btn-group">
                                 <a data-url="{{ route('request.show',  $request->id) }}" type="button" class="btn btn-info btn-sm id-modal"><i data-url="{{ route('request.show',  $request->id) }}" class="fa fa-eye id-modal1"></i></a>
-                                <a href="{{ route('boss.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('spt.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('mgr.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                                @role('boss')
+                                  @if($request->status_id == 1)
+                                    <a href="{{ route('boss.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                                  @endif
+                                @endrole
+                                @role('spt mis')
+                                  @if($request->status_id == 2)
+                                    <a href="{{ route('spt.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                                  @endif
+                                @endrole
+                                @role('mgr mis')
+                                  @if($request->status_id == 3)
+                                    <a href="{{ route('mgr.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                                  @endif
+                                @endrole
+                                @role('staf')
+                                  @if($request->status_id == 4)
+                                    <a href="{{ route('updateview.view',  $request->id) }}" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                                  @endif
+                                @endrole
                               </div>
                           </td>
                       </tr>

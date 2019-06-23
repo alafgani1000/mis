@@ -15,4 +15,14 @@ class RequestApproval extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Status');
+    }
 }

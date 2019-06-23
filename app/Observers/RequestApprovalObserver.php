@@ -11,6 +11,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use UrlSigner;
 
 class RequestApprovalObserver
 {
@@ -24,53 +25,51 @@ class RequestApprovalObserver
     {
         if($requestApproval->request->status_id == Status::requestCreated()->first()->id)
         { 
-            //$url    = UrlSigner::sign(route('signed.approveshow', [$requestApproval->request->id, Auth::user()->boss()->id]),2);
-            $urldb  = route('boss.view', $requestApproval->request->id);
+            $url    = UrlSigner::sign(route('boss.view.urlsigned', [$requestApproval->request->id, Auth::user()->boss()->id]),2);
             $boss   = Auth::user()->boss();
-            $boss->notify(new RequestAction($requestApproval, $urldb));
+            $boss->notify(new RequestAction($requestApproval, $url));
         }
         if($requestApproval->request->status_id == Status::bossApproved()->first()->id)
         { 
-            //$url    = UrlSigner::sign(route('signed.approveshow', [$requestApproval->request->id, Auth::user()->boss()->id]),2);
             $role       = Role::findByName('spt mis');
             $collection = $role->users;
             $collection->each(function ($item, $key) use ($requestApproval) {
-                $urldb  = route('spt.view', $requestApproval->request->id);
-                $item->notify(new RequestAction($requestApproval, $urldb));
+                $url    = UrlSigner::sign(route('spt.view.urlsigned', [$requestApproval->request->id, $item->id]),2);
+                $item->notify(new RequestAction($requestApproval, $url));
             });
         }
         if($requestApproval->request->status_id == Status::bossRejected()->first()->id)
         { 
-            $urldb  = route('request.index', $requestApproval->request->id);
-            $boss   = $requestApproval->request->user;
-            $boss->notify(new RequestAction($requestApproval, $urldb));
+            $user   = $requestApproval->request->user;
+            $url    = UrlSigner::sign(route('index.urlsigned', [$user->id]),2);
+            $user->notify(new RequestAction($requestApproval, $url));
         }
         if($requestApproval->request->status_id == Status::sptMisApproved()->first()->id)
         { 
             $role       = Role::findByName('mgr mis');
             $collection = $role->users;
             $collection->each(function ($item, $key) use ($requestApproval) {
-                $urldb  = route('mgr.view', $requestApproval->request->id);
-                $item->notify(new RequestAction($requestApproval, $urldb));
+                $url    = UrlSigner::sign(route('mgr.view.urlsigned', [$requestApproval->request->id, $item->id]),2);
+                $item->notify(new RequestAction($requestApproval, $url));
             });
         }
         if($requestApproval->request->status_id == Status::sptMisRejected()->first()->id)
         { 
-            $urldb  = route('request.index', $requestApproval->request->id);
-            $boss   = $requestApproval->request->user;
-            $boss->notify(new RequestAction($requestApproval, $urldb));
+            $user   = $requestApproval->request->user;
+            $url    = UrlSigner::sign(route('index.urlsigned', [$user->id]),2);
+            $user->notify(new RequestAction($requestApproval, $url));
         }
         if($requestApproval->request->status_id == Status::mgrMisApproved()->first()->id)
         { 
-            $urldb  = route('request.index', $requestApproval->request->id);
-            $boss   = $requestApproval->request->user;
-            $boss->notify(new RequestAction($requestApproval, $urldb));
+            $user   = $requestApproval->request->user;
+            $url    = UrlSigner::sign(route('index.urlsigned', [$user->id]),2);
+            $user->notify(new RequestAction($requestApproval, $url));
         }
         if($requestApproval->request->status_id == Status::sptMisApproved()->first()->id)
         { 
-            $urldb  = route('request.index', $requestApproval->request->id);
-            $boss   = $requestApproval->request->user;
-            $boss->notify(new RequestAction($requestApproval, $urldb));
+            $user   = $requestApproval->request->user;
+            $url    = UrlSigner::sign(route('index.urlsigned', [$user->id]),2);
+            $user->notify(new RequestAction($requestApproval, $url));
         }
     }
 

@@ -45,7 +45,7 @@ class User extends Authenticatable
     public function boss()
     {
         $json = file_get_contents(
-            "http://eos.krakatausteel.com/api/structdisp/"
+            "https://eos.krakatausteel.com/api/structdisp/"
             . $this->id 
             . "/minManagerBoss"
         );

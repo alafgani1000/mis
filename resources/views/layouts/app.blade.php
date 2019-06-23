@@ -72,7 +72,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{ url('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ Auth::user()->name }}</span>
+              <span class="hidden-xs"><b>{{ title_case(Auth::user()->name) }}</b></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -107,7 +107,7 @@
           <img src="{{ url('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>{{ title_case(Auth::user()->name) }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -128,7 +128,7 @@
         {{-- <li><a href="https://adminlte.io/docs"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li> --}}
         <li><a href="{{ route('request.create') }}"><i class="fa fa-edit"></i> <span>Form Permintaan</span></a></li>
         <li><a href="{{ route('request.index') }}"><i class="fa fa-table"></i> <span>Data Permintaan</span></a></li>
-        <li class="treeview">
+        {{-- <li class="treeview">
           <a href="#">
             <i class="fa fa-share"></i> <span>Multilevel</span>
             <span class="pull-right-container">
@@ -160,7 +160,7 @@
             </li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
           </ul>
-        </li>
+        </li> --}}
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -175,7 +175,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Template Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
 

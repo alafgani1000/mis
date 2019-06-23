@@ -11,6 +11,11 @@ class Status extends Model
         return $this->hasMany('App\Request');
     }
     
+    public function requestApprovals()
+    {
+        return $this->hasMany('App\RequestApproval');
+    }
+    
     public function scopeRequestCreated($query)
     {
         return $query->where('id',1);
