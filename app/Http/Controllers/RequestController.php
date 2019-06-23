@@ -26,7 +26,7 @@ class RequestController extends Controller
         if(Auth::user()->hasRole('employee'))
         {
             Auth::loginUsingId($user);
-            $requests = R::all();
+            $requests = R::where('user_id', Auth::user()->id)->get();
             return view('request.index', compact('requests'));
         }
         elseif(Auth::user()->hasRole('spt mis') || Auth::user()->hasRole('staf'))
