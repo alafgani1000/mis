@@ -12,6 +12,7 @@ use App\RequestProduct;
 use App\RequestAttachment;
 use App\Status;
 use Carbon\Carbon;
+use App\Http\Requests\StoreRequestData;
 
 class RequestController extends Controller
 {
@@ -47,7 +48,7 @@ class RequestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequestData $request)
     {
         //
         $r = new R();

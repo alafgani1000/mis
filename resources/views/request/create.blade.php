@@ -31,30 +31,46 @@
                     <div class="col-md-4">
                         <label>Jenis Data Permintaan</label>
                         <select class="form-control" name="category" id="category">
+                          <option value="">Pilih Data Jenis Permintaan</option>
                            @foreach ($categories as $category)
-                            <option id="{{ $category->id}}" data-text="{{ $category->text }}" value="{{ $category->id}}">{{ $category->name }}</option>
+                            <option {{(old('category')==$category->id)? 'selected':''}} id="{{ $category->id}}" data-text="{{ $category->text }}" value="{{ $category->id}}">{{ $category->name }}</option>
                            @endforeach
                         </select>
+                        @if ($errors->has('category'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('category') }}</strong>
+                          </span>
+                        @endif
                     </div>
                     <div class="col-md-8">
                       <label for="exampleInputEmail1">&nbsp;</label>
-                      <input value="" type="text" class="form-control" id="idtext">
+                      <input name="deskripsi" type="text" class="form-control" id="idtext"  value="{{ old('deskripsi') }}">
                     </div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="title">Judul Permintaan</label>
-                <input name="title" type="title" class="form-control" id="idtitle" placeholder="Judul">
+                <input name="title" type="text" class="form-control" id="idtitle" placeholder="Judul" value="{{ old('title') }}">
+                @if ($errors->has('title'))
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $errors->first('title') }}</strong>
+                  </span>
+                @endif
               </div>
               <div class="form-group">
                 <label>Produk</label>
                 <div class="checkbox">
                   @foreach ($products as $product)
                     <label>
-                    <input name="products[]" value="{{ $product->id }}" type="checkbox"> {{ $product->name }}
+                    <input name="products[]" value="{{ $product->id }}" type="checkbox" {{ in_array($product->id, old('products', [])) ? 'checked' : '' }} > {{ $product->name }}
                     </label>
                     &nbsp;
                   @endforeach
+                  <div>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('products') }}</strong>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -65,8 +81,11 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input name="start_date" type="text" class="form-control pull-right datepicker" id="">
+                        <input name="start_date" type="text" class="form-control pull-right datepicker" id="" value="{{ old('start_date') }}">
                       </div>
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->first('start_date') }}</strong>
+                      </span>
                     </div>
                     <div class="col-md-1">
                       <label>S/D</label>
@@ -76,8 +95,11 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input name="end_date" type="text" class="form-control pull-right datepicker" id="">
+                        <input name="end_date" type="text" class="form-control pull-right datepicker" id="" value="{{ old('end_date') }}">
                       </div>
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->first('end_date') }}</strong>
+                      </span>
                     </div>
                 <!-- /.input group -->
               </div>
@@ -87,16 +109,23 @@
                   <div class="col-md-12">
                       <label>Digunakan Untuk</label>
                       <select class="form-control" name="usability">
+                          <option value="">------ Pilih ------</option>
                           @foreach ($usabilities as $usability)
-                            <option value="{{ $usability->id }}">{{ $usability->name }}</option>
+                            <option value="{{ $usability->id }}" {{(old('usability')==$usability->id)? 'selected':''}}>{{ $usability->name }}</option>
                           @endforeach
                       </select>
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->first('usability') }}</strong>
+                      </span>
                   </div>
               </div>
             </div>
             <div class="form-group">
               <label>Format Laporan</label>
-              <textarea name="format" class="form-control" rows="4" placeholder=""></textarea>
+              <textarea name="format" class="form-control" rows="4" placeholder="">{{ old('usability') }}</textarea>
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('usability') }}</strong>
+              </span>
             </div>
             <div class="form-group">
               <label for="exampleInputFile">Attachment</label>
