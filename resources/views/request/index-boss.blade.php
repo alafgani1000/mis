@@ -31,6 +31,7 @@
                   <thead>
                   <tr>
                     <th>No</th>
+                    <th>Peminta</th>
                     <th>Judul Permintaan</th>
                     <th>Jenis Data</th>
                     <th>Produk</th>
@@ -45,6 +46,7 @@
                     @foreach ($requests as $request)
                       <tr>
                           <td>{{ $request->id }}</td>
+                          <td>{{ $request->user->name }} ({{ $request->user->id }})</td>
                           <td>{{ $request->title }}</td>
                           <td>{{ $request->category->name }}</td>
                           <td>
@@ -90,6 +92,7 @@
                   <tfoot>
                   <tr>
                     <th>No</th>
+                    <th>Peminta</th>
                     <th>Judul Permintaan</th>
                     <th>Jenis Data</th>
                     <th>Produk</th>

@@ -53,4 +53,17 @@ class User extends Authenticatable
         return User::find($data['personnel_no']);
     }
 
+    public function getPersonnelNoSubordinates()
+    {
+        $json = file_get_contents(
+            "https://eos.krakatausteel.com/api/structdisp/"
+            . $this->id
+            . "/subordinates"
+        );
+
+        $data = json_decode($json, true);
+        $datanik = array_column($data,'personnel_no');
+        return $datanik;   
+    }
+
 }

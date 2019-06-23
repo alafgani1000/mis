@@ -3,9 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class Request extends Model
 {
+    public function scopeOfBossSubordinates($query)
+    {
+        $query->whereIn('user_id', Auth::user()->getPersonnelNoSubordinates());
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Category');

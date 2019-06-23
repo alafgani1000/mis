@@ -23,9 +23,30 @@ class RequestController extends Controller
      */
     public function index($user=null)
     {
-        Auth::loginUsingId($user);
-        $requests = R::all();
-        return view('request.index', compact('requests'));
+        if(Auth::user()->hasRole('employee'))
+        {
+            Auth::loginUsingId($user);
+            $requests = R::all();
+            return view('request.index', compact('requests'));
+        }
+        elseif(Auth::user()->hasRole('spt mis') || Auth::user()->hasRole('staf'))
+        {
+            Auth::loginUsingId($user);
+            $requests = R::all();
+            return view('request.index-supt', compact('requests'));
+        }
+        elseif(Auth::user()->hasRole('mgr mis'))
+        {
+            Auth::loginUsingId($user);
+            $requests = R::all();
+            return view('request.index-mgr', compact('requests'));
+        }
+        elseif(Auth::user()->hasRole('boss'))
+        {
+            Auth::loginUsingId($user);
+            $requests = R::all();
+            return view('request.index-boss', compact('requests'));
+        }
     }
 
     /**
