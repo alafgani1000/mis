@@ -45,7 +45,7 @@ class User extends Authenticatable
     public function boss()
     {
         $json = file_get_contents(
-            "https://eos.krakatausteel.com/api/structdisp/"
+            "https://portal.krakatausteel.com/eos/api/structdisp/"
             . $this->id 
             . "/minManagerBoss"
         );
@@ -56,7 +56,7 @@ class User extends Authenticatable
     public function getPersonnelNoSubordinates()
     {
         $json = file_get_contents(
-            "https://eos.krakatausteel.com/api/structdisp/"
+            "https://portal.krakatausteel.com/eos/api/structdisp/"
             . $this->id
             . "/subordinates"
         );
