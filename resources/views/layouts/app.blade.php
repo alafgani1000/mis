@@ -128,6 +128,7 @@
         {{-- <li><a href="https://adminlte.io/docs"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li> --}}
         <li><a href="{{ route('request.create') }}"><i class="fa fa-edit"></i> <span>Form Permintaan</span></a></li>
         <li><a href="{{ route('request.index') }}"><i class="fa fa-table"></i> <span>Data Permintaan</span></a></li>
+        <li><a href="{{ route('request.import') }}"><i class="fa fa-table"></i> <span>Import Data</span></a></li>
         {{-- <li class="treeview">
           <a href="#">
             <i class="fa fa-share"></i> <span>Multilevel</span>

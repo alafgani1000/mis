@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Request extends Model
 {
+    protected $fillable = ['category_id','usability_id','user_id','title','format','start_date','end_date','status_id'];
+
     public function scopeOfBossSubordinates($query)
     {
         $query->whereIn('user_id', Auth::user()->getPersonnelNoSubordinates());

@@ -13,6 +13,10 @@ use App\RequestAttachment;
 use App\Status;
 use Carbon\Carbon;
 use App\Http\Requests\StoreRequestData;
+use App\Imports\RequestImport;
+use Maatwebsite\Excel\Facades\Excel;
+
+ 
 
 class RequestController extends Controller
 {
@@ -64,11 +68,60 @@ class RequestController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     *
+     *  @return \Illuminate\Http\Response
+     */
+    public function import()
+    {
+        return view('request.import-data',);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     *
+     *  @return \Illuminate\Http\Response
+     */
+    public function importProcess(Request $request)
+    {
+       
+		// menangkap file excel
+        $file = $request->file('fileattachment');
+        
+        // dd($file);
+ 
+		// membuat nama file unik
+		$nama_file = rand().$file->getClientOriginalName();
+ 
+		// upload ke folder file_siswa di dalam folder public
+		$file->move('file_import',$nama_file);
+ 
+		// import data
+		Excel::import(new RequestImport, public_path('/file_import/'.$nama_file));
+
+        return redirect()
+            ->route('request.index')
+            ->with('success', 'Data berhasil di upload.');
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+
     public function store(StoreRequestData $request)
     {
         //
